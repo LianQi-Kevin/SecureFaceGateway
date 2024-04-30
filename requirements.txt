@@ -1,0 +1,24 @@
+# deepface
+deepface
+tf-keras
+
+# API
+pydantic~=2.6.1
+fastapi~=0.109.2
+uvicorn[standard]~=0.27.1   # deploy
+aiofiles    # deploy
+aiocron     # deploy
+python-multipart    # to support FormData
+sqlmodel~=0.0.16
+sqlalchemy~=2.0.29
+
+# OAuth2 JWT
+python-jose[cryptography]
+bcrypt~=4.1.2
+
+# img convert
+opencv-python-headless
+numpy
+
+# 打包
+pyinstaller

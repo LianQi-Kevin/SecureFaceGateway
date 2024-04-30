@@ -1,0 +1,10 @@
+.idea
+cache_images
+build
+dist
+
+default_admin.json
+
+*.db
+*.spec
+*.exe
