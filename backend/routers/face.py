@@ -22,6 +22,14 @@ async def detect_face(file: UploadFile = File(...), ) -> FaceFindResponse:
                                 username=file.filename, role="user", conf=0.0)
     # 转换为base64字串
     img_base64 = f"data:image/jpeg;base64,{base64.b64encode(file.file.read()).decode()}"
+    # 校验IMG_CACHE_PATH是否存在
+    if not os.path.exists(IMG_CACHE_PATH):
+        return FaceFindResponse(success=False, message="IMG_CACHE_PATH not exists", username=file.filename, role="user",
+                                conf=0.0)
+    # 校验IMG_CACHE_PATH是否为空
+    if not os.listdir(IMG_CACHE_PATH):
+        return FaceFindResponse(success=False, message="IMG_CACHE_PATH is empty", username=file.filename, role="user",
+                                conf=0.0)
     # 调用DeepFace进行人脸验证
     results = DeepFace.find(
         img_path=img_base64,

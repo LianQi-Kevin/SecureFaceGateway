@@ -36,3 +36,9 @@ NotFound_exception = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
     detail="image not found"
 )
+
+# 未找到请假审批任务
+TaskID_NotFound_exception = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND,
+    detail="Task ID not found"
+)

@@ -1,5 +1,6 @@
 from typing import Optional, Union
 from uuid import uuid4
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 from sqlmodel import Field as sql_Field
@@ -19,6 +20,18 @@ class User(SQLModel):
 class UserInDB(User, table=True):
     """数据库表"""
     hashed_password: str = sql_Field(default=None)
+
+
+class leaveApplication(SQLModel, table=True):
+    """请假申请"""
+    task_id: str = sql_Field(primary_key=True, index=True, description="任务ID")
+    user_id: str = sql_Field(index=True, description="用户ID")
+    reason: str = sql_Field(description="请假原因")
+    create_time: datetime = sql_Field(description="申请创建时间", default_factory=lambda: datetime.now())
+    start_time: datetime = sql_Field(description="请假开始时间")
+    end_time: datetime = sql_Field(description="请假结束时间")
+    status: str = sql_Field(default="pending", description="申请状态, ['pending', 'approved', 'rejected']")
+    reply_manager: Optional[str] = sql_Field(description="审批人", default="None")
 
 
 class userInfoChange(BaseModel):

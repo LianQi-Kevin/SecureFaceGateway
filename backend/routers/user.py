@@ -207,8 +207,17 @@ async def get_face_img(current_user: User = Depends(get_current_active_user)):
 async def get_face_img_by_id(
         userID: Annotated[str, Path(title="USER_ID")],
         current_user: User = Depends(get_current_admin_user)):
-    """通过user_id获取图片"""
+    """通过user_id获取用户头像"""
     logging.info(f"Get face image by id: {userID}, constraint by {current_user.username}")
     if not os.path.exists(f"{IMG_CACHE_PATH}/{userID}.jpg"):
         raise NotFound_exception
     return FileResponse(path=f"{IMG_CACHE_PATH}/{userID}.jpg")
+
+
+@user_router.get("/{userID}", response_model=User)
+async def read_user_by_id(
+        userID: Annotated[str, Path(title="USER_ID")],
+        current_user: User = Depends(get_current_admin_user)) -> User:
+    """通过user_id获取用户信息"""
+    logging.info(f"Read user by id: {userID}, constraint by {current_user.username}")
+    return get_user_by_userid(userID)

@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.routers import token_router, user_router, face_router
+from backend.routers import token_router, user_router, face_router, app_router
 from backend.tools.logging_utils import log_set
 
 # init logging
@@ -13,6 +13,7 @@ log_set(logging.DEBUG)
 
 # init Fastapi
 app = FastAPI()
+app.include_router(app_router)
 app.include_router(token_router)  # include token_router
 app.include_router(user_router)  # include user_router
 app.include_router(face_router)  # include face_router
